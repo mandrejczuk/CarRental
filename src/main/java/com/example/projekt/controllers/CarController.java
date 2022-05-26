@@ -1,2 +1,4 @@
-package com.example.projekt.controllers;public class CarController {
+package com.example.projekt.controllers;
+
+public class CarController {
 }
