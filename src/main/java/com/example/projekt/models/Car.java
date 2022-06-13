@@ -24,8 +24,9 @@ public class Car {
     private Boolean airConditioning;
     private Boolean automaticTransmission;
     private Long pricePerDay;
+    private carType carType;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
     public enum carType {
