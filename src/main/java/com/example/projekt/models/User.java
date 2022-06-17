@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 @NoArgsConstructor
@@ -23,6 +24,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @Column(unique = true)
     private String email;
     private String password;
     private String role;
@@ -64,4 +66,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

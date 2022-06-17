@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/admin/dashboard/users/show/all}" method="get" >
+    <input type="submit" value="Back to list">
+</form>
+<form action="#" th:action="@{/admin/dashboard/users/save}" th:object="${form}"
+      method="post">
+    <input type="submit" id="submitButton" th:value="Save">
+    <br>
+<tr th:each="user, itemStat : ${form.users}">
+    <td>
+        <input hidden th:name="|users[${itemStat.index}].id|" th:value="${user.getId()}"/>
+    </td>
+    <td>
+        <input th:name="|users[${itemStat.index}].email|" th:value="${user.getEmail()}"/>
+    </td>
+    <td>
+        <input th:name="|users[${itemStat.index}].password|" th:value="${user.getPassword()}"/>
+    </td>
+    <td>
+        <select th:name="|users[${itemStat.index}].role|">
+            <option th:selected ="${user.getRole() == 'ROLE_ADMIN'}"  value="ROLE_ADMIN">ROLE_ADMIN</option>
+            <option th:selected ="${user.getRole() == 'ROLE_USER'}" value="ROLE_USER">ROLE_USER</option>
+        </select>
+    </td>
+    <br>
+</tr>
+</form>
+</body>
+</html>

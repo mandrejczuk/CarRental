@@ -37,7 +37,7 @@ public class Car {
         COMBI,
         PICKUP,
         MINIVAN,
-        ROADSTER;
+        ROADSTER
 
     }
 }

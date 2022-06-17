@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().disable();
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/swagger-ui.html","/h2-console","/swagger-resources/**","/v2/api-docs","/webjars/**").permitAll()
+                .antMatchers("/swagger-ui.html","/h2-console","/swagger-resources/**","/v2/api-docs","/webjars/**","/admin/**").hasRole("ADMIN")
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/sign-up").permitAll()

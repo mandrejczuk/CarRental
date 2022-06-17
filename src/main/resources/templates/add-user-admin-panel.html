@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" th:action="@{/admin/dashboard/users/save}" th:object="${form}"
+      method="post">
+    <fieldset>
+        <input type="submit" id="submitButton" th:value="Save">
+        <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        <form th:action="@{/admin/dashboard/users/show/all}" method="get" >
+            <input type="submit" value="Back to list">
+        </form>
+        <table>
+            <thead>
+            <tr>
+                <th> Email </th>
+                <th> Password </th>
+                <th> Role </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user, itemStat : *{users}">
+                <td><input th:field="*{users[__${itemStat.index}__].email}" /></td>
+                <td><input th:field="*{users[__${itemStat.index}__].password}" /></td>
+                <td>
+                    <select th:field="*{users[__${itemStat.index}__].role}">
+                    <option value="ROLE_USER">ROLE_USER</option>
+                    <option value="ROLE_USER">ROLE_ADMIN</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</form>
+</body>
+</html>
