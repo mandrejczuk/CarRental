@@ -33,7 +33,7 @@ public class UserController {
     public String register(User user)
     {
         System.out.println(user);
-        userService.addUser(user);
+        userService.registerUser(user);
         String s = "login";
         return s;
     }

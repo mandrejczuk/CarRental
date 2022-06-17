@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
-<form th:action="@{/admin/dashboard/users/show/all}" method="get" >
-    <input type="submit" value="Users">
-</form>
+<div class="text-center">
+    <div><h1>Welcome to Admin Panel</h1></div>
+    <div class="p-2">
+        <a class="h2" th:href="@{/admin/dashboard/users/show/all}">List Users</a>
+    </div>
+    <div class="p-2">
+        <a class="h2" th:href="@{/admin/dashboard/users/create}">Create User</a>
+    </div>
+</div>
+
 
 </body>
 </html>

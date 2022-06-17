@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl  implements UserDetailsService  {
@@ -31,7 +32,7 @@ public class UserServiceImpl  implements UserDetailsService  {
         return userRepository.findByEmail(email);
     }
 
-    public void addUser(User user)
+    public void registerUser(User user)
     {
 
         user.setRole("ROLE_USER");
@@ -56,6 +57,20 @@ public class UserServiceImpl  implements UserDetailsService  {
         }
 
         userRepository.saveAll(users);
+    }
+    public Optional<User> findbyId(Long id)
+    {
+        return userRepository.findById(id);
+
+    }
+    public void addUser(User user)
+    {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+    public void deleteUserbyId(Long id)
+    {
+        userRepository.delete(userRepository.getOne(id));
     }
 
 }

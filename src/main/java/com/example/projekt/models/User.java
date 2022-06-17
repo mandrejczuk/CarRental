@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Data
@@ -35,6 +34,11 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role));
+    }
+
+    public User()
+    {
+
     }
 
     @Override

@@ -1,35 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:margin="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
-<form th:action="@{/admin/dashboard/users/show/all}" method="get" >
-    <input type="submit" value="Back to list">
-</form>
-<form action="#" th:action="@{/admin/dashboard/users/save}" th:object="${form}"
-      method="post">
-    <input type="submit" id="submitButton" th:value="Save">
-    <br>
-<tr th:each="user, itemStat : ${form.users}">
-    <td>
-        <input hidden th:name="|users[${itemStat.index}].id|" th:value="${user.getId()}"/>
-    </td>
-    <td>
-        <input th:name="|users[${itemStat.index}].email|" th:value="${user.getEmail()}"/>
-    </td>
-    <td>
-        <input th:name="|users[${itemStat.index}].password|" th:value="${user.getPassword()}"/>
-    </td>
-    <td>
-        <select th:name="|users[${itemStat.index}].role|">
-            <option th:selected ="${user.getRole() == 'ROLE_ADMIN'}"  value="ROLE_ADMIN">ROLE_ADMIN</option>
-            <option th:selected ="${user.getRole() == 'ROLE_USER'}" value="ROLE_USER">ROLE_USER</option>
-        </select>
-    </td>
-    <br>
-</tr>
-</form>
+<div class="text-center">
+    <div class="text-left">
+        <form th:action="@{/admin/dashboard/users/show/all}" method="get">
+            <input type="submit" class="btn btn-secondary" value="Back to users list" />
+        </form>
+    </div>
+    <div><h1>Edit User </h1></div>
+    <form th:action="@{/admin/dashboard/users/save}" th:object="${user}" method="post" style="max-width: 600px;  margin: 0 auto">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">User Id:</label>
+                <div class="col-sm-8">
+                    <input readonly type="text" th:field="*{id}" id="id" placeholder="id" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">User Email:</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{email}" id="email" placeholder="email" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">User Password:</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{password}" id="password" placeholder="password" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">Role:</label>
+                <div class="col-sm-8">
+                    <select th:field="*{role}" class="form-control" required>
+                        <option th:selected="*{role == 'ROLE_ADMIN'}" value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        <option th:selected="*{role == 'ROLE_USER'}" value="ROLE_USER">ROLE_USER</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label hidden class="col-form-label-sm-4">Reservations:</label>
+                <div class="col-sm-8">
+                    <select hidden th:field="*{reservations}" class="form-control" multiple="multiple" >
+                       <th:block th:each="reservation : *{reservations}">
+                           <option selected th:text="${reservation.id}" th:value="${reservation.id}" />
+                       </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary" value="Save User"/>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

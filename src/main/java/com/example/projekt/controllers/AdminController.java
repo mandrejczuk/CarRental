@@ -10,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -62,34 +59,39 @@ public class AdminController {
     @GetMapping("/dashboard/users/create")
     public String userShowCreateForm(Model model)
     {
-        UsersCreationDto usersForm = new UsersCreationDto();
-            usersForm.addUser(new User());
-        model.addAttribute("form", usersForm);
+        model.addAttribute("user", new User());
         return "add-user-admin-panel";
     }
 
     @PostMapping("/dashboard/users/save")
-    public String saveUsers(@ModelAttribute UsersCreationDto form, Model model)
+    public String saveUser(@ModelAttribute User user)
     {
-            if (form.getUsers().get(0).getEmail().isBlank() || form.getUsers().get(0).getPassword().isBlank())
-            {
-
-            }
-            else {
-                userService.saveAll(form.getUsers());
-            }
-        model.addAttribute("users",userService.getAll());
+           userService.addUser(user);
 
         return "redirect:/admin/dashboard/users/show/all";
     }
 
-    @GetMapping("/dashboard/users/edit")
-    public String usersShowEditForm(Model model)
+    @GetMapping("/dashboard/users/edit/{id}")
+    public String usersShowEditForm(@PathVariable ("id")Long id,Model model)
     {
-        List <User> users = new ArrayList<>();
-        userService.getAll().iterator().forEachRemaining(users::add);
-        model.addAttribute("form", new UsersCreationDto(users));
-        return "edit-user-admin-panel";
+        User user = userService.findbyId(id).get();
+        model.addAttribute("user",user);
+       return "edit-user-admin-panel";
+    }
+    @GetMapping("/dashboard/users/delete/{id}")
+    public String usersDelete(@PathVariable ("id") Long id)
+    {
+
+        if(SecurityContextHolder.getContext().getAuthentication().getName() == userService.findbyId(id).get().getEmail())
+        {
+            userService.deleteUserbyId(id);
+            return "redirect:/logout";
+        }
+        else
+        {
+            userService.deleteUserbyId(id);
+            return "redirect:/admin/dashboard/users/show/all";
+        }
     }
 
 }
