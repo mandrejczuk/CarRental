@@ -5,6 +5,7 @@ import com.example.projekt.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -76,5 +77,6 @@ public class UserServiceImpl  implements UserDetailsService  {
     {
         userRepository.delete(userRepository.getOne(id));
     }
+
 
 }

@@ -7,6 +7,11 @@
 </head>
 <body>
 <div class="text-center">
+    <div class="text-left">
+        <form th:action="@{/home}" method="get">
+            <input type="submit" class="btn btn-secondary" value="Back to Home" />
+        </form>
+    </div>
     <div><h1>Welcome to Admin Panel</h1></div>
     <div class="p-2">
         <a class="h2" th:href="@{/admin/dashboard/users/show/all}">User List</a>

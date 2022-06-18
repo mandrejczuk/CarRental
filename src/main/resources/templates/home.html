@@ -5,18 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
 </head>
 
 <body>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-<div sec:authorize="hasRole('ROLE_ADMIN')">
-    This content is only shown to administrators.
-    <form th:action="@{/admin/dashboard}" method="get" >
-        <input type="submit" value="Admin Panel">
-    </form>
+<div class="allign-middle text-center">
+    <div><h1>Welcome to Car Rental</h1></div>
+    <div class="p-2">
+        <a class="h2" th:href="@{/offers/show/all}">Offers</a>
+    </div>
+    <div class="p-2">
+        <a class="h2" th:href="@{/admin/dashboard/reservations/show/all}">My reservations</a>
+    </div>
+    <div class="p-2">
+        <a class="h2" th:href="@{/logout}">Sign out</a>
+    </div>
+    <div class="p-2" sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="h2" th:href="@{/admin/dashboard}">Admin panel</a>
+    </div>
 </div>
 
 </body>

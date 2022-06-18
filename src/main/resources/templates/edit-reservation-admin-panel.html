@@ -16,7 +16,7 @@
     <form th:action="@{/admin/dashboard/reservations/save}" th:object="${reservation}" method="post" style="max-width: 600px;  margin: 0 auto">
         <div class="m-3">
             <div class="form-group row">
-                <label class="col-form-label-sm-4">Car Id:</label>
+                <label class="col-form-label-sm-4">Reservation Id:</label>
                 <div class="col-sm-8">
                     <input readonly type="text" th:field="*{id}" id="id" placeholder="id" class="form-control" />
                 </div>
