@@ -2,6 +2,8 @@ package com.example.projekt.sevices;
 
 import com.example.projekt.models.User;
 import com.example.projekt.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class UserServiceImpl  implements UserDetailsService  {
 
     private  UserRepository userRepository;
+    private Logger logger = LoggerFactory.getLogger(UserDetails.class);
+
 
     @Lazy
     private PasswordEncoder passwordEncoder;

@@ -1,21 +1,17 @@
 package com.example.projekt.controllers;
 
-import com.example.projekt.DTO.UsersCreationDto;
+import com.example.projekt.models.Car;
+import com.example.projekt.models.Reservation;
 import com.example.projekt.models.User;
 import com.example.projekt.sevices.CarService;
 import com.example.projekt.sevices.ReservationService;
 import com.example.projekt.sevices.UserServiceImpl;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,6 +42,8 @@ public class AdminController {
 
     }
 
+
+    // USER PANEL
 
 
     @GetMapping("/dashboard/users/show/all")
@@ -94,4 +92,93 @@ public class AdminController {
         }
     }
 
+
+
+    //CAR PANEL
+
+
+
+    @GetMapping("/dashboard/cars/show/all")
+    public String getAllCars(Model model)
+    {
+
+        model.addAttribute("cars",carService.getAll());
+
+        return "cars-admin-panel";
+    }
+    @GetMapping("/dashboard/cars/create")
+    public String carShowCreateForm(Model model)
+    {
+        model.addAttribute("car", new Car());
+        return "add-car-admin-panel";
+    }
+
+    @PostMapping("/dashboard/cars/save")
+    public String saveCar(@ModelAttribute Car car)
+    {
+        carService.add(car);
+
+        return "redirect:/admin/dashboard/cars/show/all";
+    }
+    @GetMapping("/dashboard/cars/delete/{id}")
+    public String carsDelete(@PathVariable ("id") Long id)
+    {
+
+            carService.delete(id);
+            return "redirect:/admin/dashboard/cars/show/all";
+    }
+    @GetMapping("/dashboard/cars/edit/{id}")
+    public String carsShowEditForm(@PathVariable ("id")Long id,Model model)
+    {
+        Car car = carService.show(id);
+        model.addAttribute("car",car);
+        return "edit-car-admin-panel";
+    }
+
+
+
+    //RESERVATION PANEL
+
+
+
+    @GetMapping("/dashboard/reservations/show/all")
+    public String getAllReservations(Model model)
+    {
+
+        model.addAttribute("reservations",reservationService.getAll());
+
+        return "reservations-admin-panel";
+    }
+    @GetMapping("/dashboard/reservations/create")
+    public String reservationShowCreateForm(Model model)
+    {
+        model.addAttribute("reservation", new Reservation());
+        model.addAttribute("cars", carService.getAll());
+        model.addAttribute("users",userService.getAll());
+        return "add-reservation-admin-panel";
+    }
+
+    @PostMapping("/dashboard/reservations/save")
+    public String saveReservation(Reservation reservation)
+    {
+        reservationService.add(reservation);
+
+        return "redirect:/admin/dashboard/reservations/show/all";
+    }
+    @GetMapping("/dashboard/reservations/delete/{id}")
+    public String reservationDelete(@PathVariable ("id") Long id)
+    {
+
+        reservationService.delete(id);
+        return "redirect:/admin/dashboard/reservations/show/all";
+    }
+    @GetMapping("/dashboard/reservations/edit/{id}")
+    public String reservationsShowEditForm(@PathVariable ("id")Long id,Model model)
+    {
+        Reservation reservation = reservationService.show(id);
+        model.addAttribute("reservation",reservation);
+        model.addAttribute("cars", carService.getAll());
+        model.addAttribute("users",userService.getAll());
+        return "edit-reservation-admin-panel";
+    }
 }

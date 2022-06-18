@@ -8,11 +8,11 @@
 <body>
 <div class="text-center">
     <div class="text-left">
-        <form th:action="@{/admin/dashboard/users/show/all}" method="get">
-            <input type="submit" class="btn btn-secondary" value="Back to users list" />
+        <form th:action="@{/admin/dashboard}" method="get">
+            <input type="submit" class="btn btn-secondary" value="Back to dashboard" />
         </form>
     </div>
-    <div><h1>Create New User </h1></div>
+    <div><h1>Create User </h1></div>
     <form th:action="@{/admin/dashboard/users/save}" th:object="${user}" method="post" style="max-width: 600px;  margin: 0 auto">
         <div class="m-3">
             <div class="form-group row">
@@ -28,6 +28,9 @@
                 <div class="col-sm-8">
                     <input type="text" th:field="*{password}" id="password" placeholder="password" class="form-control" />
                 </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">User Role:</label>
                 <div class="col-sm-8">
                     <select th:field="*{role}" class="form-control" required>
                         <option th:selected="*{role == 'ROLE_ADMIN'}" value="ROLE_ADMIN">ROLE_ADMIN</option>
@@ -35,10 +38,10 @@
                     </select>
                 </div>
             </div>
+        </div>
             <div class="text-center">
                 <input type="submit" class="btn btn-primary" value="Add User"/>
             </div>
-        </div>
     </form>
 </div>
 </body>

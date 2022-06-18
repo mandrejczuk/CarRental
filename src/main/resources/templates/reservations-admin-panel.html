@@ -12,29 +12,31 @@
             <input type="submit" class="btn btn-secondary" value="Back to Dashboard" />
         </form>
     </div>
-    <div><h1>User List</h1></div>
+    <div><h1>Reservation List</h1></div>
     <div>
         <table class="table table-bordered">
             <thead class="thead-dark">
-                <th>ID</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Role</th>
-                <th></th>
-                <th></th>
+            <th>ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Car Id</th>
+            <th>User Id</th>
+            <th></th>
+            <th></th>
             </thead>
             <tbody>
-            <th:block th:each="user : ${users}">
+            <th:block th:each="reservation : ${reservations}">
                 <tr>
-                    <td>[[${user.id}]]</td>
-                    <td>[[${user.email}]]</td>
-                    <td>[[${user.password}]]</td>
-                    <td>[[${user.role}]]</td>
+                    <td>[[${reservation.id}]]</td>
+                    <td>[[${reservation.startDate}]]</td>
+                    <td>[[${reservation.endDate}]]</td>
+                    <td>[[${reservation.car.id}]]</td>
+                    <td>[[${reservation.user.id}]]</td>
                     <td>
-                        <a th:href="@{'/admin/dashboard/users/edit/' +${user.id}}">Edit</a>
+                        <a th:href="@{'/admin/dashboard/reservations/edit/' +${reservation.id}}">Edit</a>
                     </td>
                     <td>
-                        <a th:href="@{'/admin/dashboard/users/delete/' +${user.id}}">Delete</a>
+                        <a th:href="@{'/admin/dashboard/reservations/delete/' +${reservation.id}}">Delete</a>
                     </td>
                 </tr>
             </th:block>
