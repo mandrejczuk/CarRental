@@ -17,7 +17,7 @@
     <div>
         <table class="table table-bordered sortable">
             <thead class="thead-dark">
-            <th>ID</th>
+            <th hidden>ID</th>
             <th>Brand</th>
             <th>Car type</th>
             <th>Seat number</th>
@@ -30,7 +30,7 @@
             <tbody>
             <th:block th:each="car : ${cars}">
                 <tr>
-                    <td>[[${car.id}]]</td>
+                    <td hidden>[[${car.id}]]</td>
                     <td>[[${car.brand}]]</td>
                     <td>[[${car.carType}]]</td>
                     <td>[[${car.seatNumber}]]</td>

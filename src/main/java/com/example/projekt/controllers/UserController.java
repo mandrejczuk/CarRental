@@ -7,6 +7,7 @@ import com.example.projekt.repositories.UserRepository;
 import com.example.projekt.sevices.CarService;
 import com.example.projekt.sevices.ReservationService;
 import com.example.projekt.sevices.UserServiceImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,7 @@ public class UserController {
     @PostMapping("/register")
     public String register(User user)
     {
-        System.out.println(user);
+
         userService.registerUser(user);
         String s = "login";
         return s;
@@ -59,35 +60,75 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/offers/show/all")
-    public String getOffers(Model model)
-    {
-        model.addAttribute("cars",carService.getAll());
 
-        return "offers";
+
+
+
+    // USER PANEL
+
+    @GetMapping("admin/dashboard/users/show/all")
+    public String getAllUser(Model model)
+    {
+
+        model.addAttribute("users",userService.getAll());
+
+        return "users-admin-panel";
+    }
+    @GetMapping("admin/dashboard/users/create")
+    public String userShowCreateForm(Model model)
+    {
+        model.addAttribute("user", new User());
+        return "add-user-admin-panel";
     }
 
-    @GetMapping("/reservation/{id}")
-    public String reservationShowAddForm(@PathVariable("id")Long id, Model model, Principal principal)
+    @PostMapping("admin/dashboard/users/save")
+    public String saveUser(@ModelAttribute User user)
     {
-        Car car = carService.show(id);
-        String username = principal.getName();
-        User user = userService.loadUserByEmail(username);
-        Reservation reservation = new Reservation();
-        reservation.setUser(user);
-        reservation.setCar(car);
-        model.addAttribute("reservation", reservation);
-        model.addAttribute("car", car);
-        model.addAttribute("user", user);
-        return "rent";
+        userService.addUser(user);
+
+        return "redirect:/admin/dashboard/users/show/all";
     }
 
-    @PostMapping("/reservation/add")
-    public String addReservation(Reservation reservation)
+    @GetMapping("admin/dashboard/users/edit/{id}")
+    public String usersShowEditForm(@PathVariable ("id")Long id,Model model)
+    {
+        User user = userService.findbyId(id).get();
+        model.addAttribute("user",user);
+        return "edit-user-admin-panel";
+    }
+    @GetMapping("admin/dashboard/users/delete/{id}")
+    public String usersDelete(@PathVariable ("id") Long id)
     {
 
-        reservationService.add(reservation);
+        if(SecurityContextHolder.getContext().getAuthentication().getName() == userService.findbyId(id).get().getEmail())
+        {
+            userService.deleteUserbyId(id);
+            return "redirect:/logout";
+        }
+        else
+        {
+            userService.deleteUserbyId(id);
+            return "redirect:/admin/dashboard/users/show/all";
+        }
+    }
 
-        return "redirect:/home";
+    @GetMapping("/admin/dashboard")
+    public String getDashboard(Principal principal) {
+
+        if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated())
+        {
+            User user = userService.loadUserByEmail(principal.getName());
+
+            if (user.getRole() == "ROLE_ADMIN") {
+                return "admin-panel";
+            } else {
+                return "home";
+            }
+        }
+        else
+        {
+            return "login";
+        }
+
     }
 }
