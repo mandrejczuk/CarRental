@@ -15,12 +15,33 @@
     <div><h1>Rent</h1></div>
     <form th:action="@{/reservation/add}" th:object="${reservation}" method="post" style="max-width: 600px;  margin: 0 auto">
         <div class="m-3">
+            <input hidden th:field="*{car}" th:value="${car}"/>
+            <input hidden th:field="*{user}" th:value="${user}">
             <div class="form-group row">
-                <label class="col-form-label-sm-4">Car Id:</label>
+                <label class="col-form-label-sm-4">Car Brand:</label>
                 <div class="col-sm-8">
-                    <input readonly type="text" th:field="*{id}" id="id" placeholder="id" class="form-control" />
+                    <input readonly type="text" th:value="${car.brand}" id="carBrand" placeholder="carBrand" class="form-control" />
                 </div>
             </div>
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">Air conditioning:</label>
+                <div class="col-sm-8">
+                    <input readonly type="text" th:value="${car.airConditioning}" id="airConditioning" placeholder="airConditioning" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">Automatic transmission:</label>
+                <div class="col-sm-8">
+                    <input readonly type="text" th:value="${car.automaticTransmission}" id="automaticTransmission" placeholder="automaticTransmission" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label-sm-4">Price per day:</label>
+                <div class="col-sm-8">
+                    <input readonly type="text" th:value="${car.pricePerDay}" id="price" placeholder="price" class="form-control" />
+                </div>
+            </div>
+
             <div class="form-group row">
                 <label class="col-form-label-sm-4">Reservation Start Date:</label>
 

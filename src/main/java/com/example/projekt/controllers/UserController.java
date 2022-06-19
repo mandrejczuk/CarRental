@@ -73,15 +73,19 @@ public class UserController {
         Car car = carService.show(id);
         String username = principal.getName();
         User user = userService.loadUserByEmail(username);
-        model.addAttribute("reservation", new Reservation());
+        Reservation reservation = new Reservation();
+        reservation.setUser(user);
+        reservation.setCar(car);
+        model.addAttribute("reservation", reservation);
         model.addAttribute("car", car);
         model.addAttribute("user", user);
         return "rent";
     }
 
     @PostMapping("/reservation/add")
-    public String saveReservation(Reservation reservation)
+    public String addReservation(Reservation reservation)
     {
+
         reservationService.add(reservation);
 
         return "redirect:/home";
