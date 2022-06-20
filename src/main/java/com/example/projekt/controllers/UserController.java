@@ -42,17 +42,21 @@ public class UserController {
     public String singup(Model model)
     {
         model.addAttribute("user", new User());
-        String s = "sing-up";
         return "sign-up";
     }
 
     @PostMapping("/register")
     public String register(User user)
     {
-
-        userService.registerUser(user);
-        String s = "login";
-        return s;
+        if(userService.isEmailUnique(user.getEmail()))
+        {
+            userService.registerUser(user);
+            return "login";
+        }
+        else
+        {
+            return "registration-fail";
+        }
     }
     @GetMapping("/login")
     public String login()

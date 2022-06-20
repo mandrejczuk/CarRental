@@ -97,4 +97,6 @@ public class UserServiceTests {
         assert userService.getAll().size() == 2;
         assert reservationService.getAll().size() == 2;
     }
+
+
 }

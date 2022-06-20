@@ -78,5 +78,17 @@ public class UserServiceImpl  implements UserDetailsService  {
         userRepository.delete(userRepository.getOne(id));
     }
 
+    public boolean isEmailUnique(String email)
+    {
+        if(userRepository.existsUserByEmail(email))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
 
 }
