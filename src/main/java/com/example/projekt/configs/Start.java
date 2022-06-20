@@ -56,6 +56,7 @@ public class Start {
         reservation.setEndDate(LocalDate.of(2023,12,12));
         reservation.setCar(car);
         reservation.setUser(user);
+        reservation.setEnabled(true);
         reservationRepository.save(reservation);
 
         Reservation reservation1 = new Reservation();
@@ -63,6 +64,7 @@ public class Start {
         reservation1.setEndDate(LocalDate.of(2022,7,1));
         reservation1.setCar(car1);
         reservation1.setUser(user1);
+        reservation1.setEnabled(true);
         reservationRepository.save(reservation1);
 
 

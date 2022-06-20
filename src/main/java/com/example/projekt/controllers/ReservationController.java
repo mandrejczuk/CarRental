@@ -2,7 +2,9 @@ package com.example.projekt.controllers;
 
 import com.example.projekt.models.Car;
 import com.example.projekt.models.Reservation;
+import com.example.projekt.models.Token;
 import com.example.projekt.models.User;
+import com.example.projekt.repositories.TokenRepository;
 import com.example.projekt.sevices.CarService;
 import com.example.projekt.sevices.ReservationService;
 import com.example.projekt.sevices.UserServiceImpl;
@@ -10,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -23,11 +22,13 @@ public class ReservationController {
     private ReservationService reservationService;
     private UserServiceImpl userService;
     private CarService carService;
+    private TokenRepository tokenRepository;
 
-    public ReservationController(ReservationService reservationService, UserServiceImpl userService, CarService carService) {
+    public ReservationController(ReservationService reservationService, UserServiceImpl userService, CarService carService, TokenRepository tokenRepository) {
         this.reservationService = reservationService;
         this.userService = userService;
         this.carService = carService;
+        this.tokenRepository = tokenRepository;
     }
 //RESERVATION ADMIN PANEL
 
@@ -59,7 +60,7 @@ public class ReservationController {
     public String reservationDelete(@PathVariable("id") Long id)
     {
 
-        reservationService.delete(id);
+        reservationService.adminDeletesReservation(id);
         return "redirect:/admin/dashboard/reservations/show/all";
     }
     @GetMapping("/admin/dashboard/reservations/edit/{id}")
@@ -118,5 +119,21 @@ public class ReservationController {
             }
 
 
+    }
+
+    @GetMapping("/reservation/token")
+    public String tokenActivation(@RequestParam String value, Model model)
+    {
+        if(tokenRepository.existsByValue(value))
+        {
+           Token token = tokenRepository.findByValue(value);
+            Reservation reservation = token.getReservation();
+            reservation.setEnabled(true);
+            tokenRepository.delete(token);
+            reservationService.add(reservation);
+            model.addAttribute("reservation",reservation);
+            return "user-reservation-enabled";
+        }
+        return "user-reservation-enabled-fail";
     }
 }

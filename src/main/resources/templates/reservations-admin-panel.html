@@ -21,6 +21,7 @@
             <th>End Date</th>
             <th>Car Id</th>
             <th>User Id</th>
+            <th>Paid</th>
             <th></th>
             <th></th>
             </thead>
@@ -32,6 +33,7 @@
                     <td>[[${reservation.endDate}]]</td>
                     <td>[[${reservation.car.id}]]</td>
                     <td>[[${reservation.user.id}]]</td>
+                    <td>[[${reservation.enabled}]]</td>
                     <td>
                         <a th:href="@{'/admin/dashboard/reservations/edit/' +${reservation.id}}">Edit</a>
                     </td>
