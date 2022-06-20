@@ -3,34 +3,32 @@ package com.example.projekt.controllers;
 import com.example.projekt.models.Car;
 import com.example.projekt.models.Reservation;
 import com.example.projekt.models.User;
+import com.example.projekt.repositories.TokenRepository;
 import com.example.projekt.repositories.UserRepository;
 import com.example.projekt.sevices.CarService;
 import com.example.projekt.sevices.ReservationService;
 import com.example.projekt.sevices.UserServiceImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.token.TokenService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     private UserServiceImpl userService;
-
-    private CarService carService;
-
+    private TokenRepository tokenRepository;
     private ReservationService reservationService;
 
-    private UserRepository userRepository;
-
-    public UserController(UserServiceImpl userService, CarService carService, ReservationService reservationService, UserRepository userRepository) {
+    public UserController(UserServiceImpl userService,TokenRepository tokenRepository,ReservationService reservationService ) {
 
         this.userService = userService;
-        this.carService = carService;
-        this.reservationService = reservationService;
-        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
+
     }
 
     @GetMapping("/home")
@@ -118,6 +116,13 @@ public class UserController {
         }
         else
         {
+            List<Reservation> reservations = userService.findbyId(id).get().getReservations();
+            for (Reservation r : reservations) {
+                if(tokenRepository.existsByReservation(r))
+                {
+                    tokenRepository.delete(tokenRepository.findByReservation(r));
+                }
+            }
             userService.deleteUserbyId(id);
             return "redirect:/admin/dashboard/users/show/all";
         }

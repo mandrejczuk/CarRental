@@ -70,8 +70,8 @@ public class UserServiceImpl  implements UserDetailsService  {
     }
     public void deleteUserbyId(Long id)
     {
-        userRepository.delete(userRepository.getOne(id));
-        logger.info("User with id: "+ id +" has been deleted");
+            userRepository.delete(userRepository.getOne(id));
+            logger.info("User with id: " + id + " has been deleted");
     }
 
     public boolean isEmailUnique(String email)

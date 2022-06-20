@@ -50,6 +50,7 @@ public class Token {
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
     }
+
     public LocalTime getCreatedAt() {
         return createdAt;
     }
