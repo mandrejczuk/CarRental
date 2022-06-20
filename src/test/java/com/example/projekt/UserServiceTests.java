@@ -84,6 +84,7 @@ public class UserServiceTests {
         user.setPassword("123");
         userService.registerUser(user);
         Reservation reservation = new Reservation();
+        reservation.setEnabled(true);
         reservation.setStartDate(LocalDate.of(2023,10,12));
         reservation.setEndDate(LocalDate.of(2023,12,12));
         reservation.setUser(user);

@@ -1,5 +1,6 @@
 package com.example.projekt;
 import com.example.projekt.models.Car;
+import com.example.projekt.models.Reservation;
 import com.example.projekt.sevices.CarService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,4 +53,5 @@ public class CarServiceTests {
         List<Car> carsList = carService.getAll();
         assert carsList.size() == 2;
     }
+
 }

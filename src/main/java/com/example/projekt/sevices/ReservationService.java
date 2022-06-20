@@ -56,7 +56,10 @@ public class ReservationService extends GenericManagementService<Reservation, Re
             tokenRepository.delete(tokenRepository.findByReservation(repository.findById(id).get()));
         }
       Reservation reservation =  repository.findById(id).get();
-      sendDeleteMail(reservation.getUser().getEmail(), reservation.getCar().getBrand());
+        if(reservation.getUser() != null && reservation.getCar() != null)
+        {
+            sendDeleteMail(reservation.getUser().getEmail(), reservation.getCar().getBrand());
+        }
         super.delete(id);
     }
 

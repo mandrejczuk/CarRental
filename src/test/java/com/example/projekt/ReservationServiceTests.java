@@ -20,6 +20,7 @@ public class ReservationServiceTests {
     public void addTest()
     {
         Reservation reservation = new Reservation();
+        reservation.setEnabled(true);
         reservationService.add(reservation);
         System.out.println(reservationService.getAll().size());
         assert reservationService.getAll().size() == 3;
@@ -30,6 +31,7 @@ public class ReservationServiceTests {
     public void deleteTest()
     {
         Reservation reservation = new Reservation();
+        reservation.setEnabled(true);
         reservationService.add(reservation);
         assert reservationService.getAll().size() == 3;
         reservationService.delete(reservation.getId());

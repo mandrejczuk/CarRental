@@ -20,6 +20,8 @@ public class CarService extends GenericManagementService<Car, CarRepository> {
     }
 
     private Logger logger = LoggerFactory.getLogger(CarService.class);
+
+
     public boolean carAvailable(Reservation reservation)
     {
 
