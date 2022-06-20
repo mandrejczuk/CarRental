@@ -20,14 +20,14 @@
                 <label class="col-form-label-sm-4">Reservation Start Date:</label>
 
                 <div class="col-sm-8">
-                    <input type="date" th:field="*{startDate}" id="startDate" placeholder="startDate" class="form-control"  required/>
+                    <input id="StartDate" type="date" th:field="*{startDate}"  placeholder="startDate" class="form-control" oninput="check(this)"  required/>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label-sm-4">Reservation End Date:</label>
 
                 <div class="col-sm-8">
-                    <input type="date" th:field="*{endDate}" id="endDate" placeholder="endDate" class="form-control" required/>
+                    <input id="EndDate" type="date" th:field="*{endDate}"  placeholder="endDate" class="form-control" oninput="check(this)" required/>
                 </div>
             </div>
             <div class="form-group row">
@@ -57,4 +57,20 @@
     </form>
 </div>
 </body>
+<script>
+    function check(input) {
+        // if (Date.parse(input.value())) {
+        //     input.setCustomValidity('The number must be greater than zero.');
+        // } else {
+        //     // input is fine -- reset the error message
+        //     input.setCustomValidity('');
+        // }
+        var startDate = document.getElementById("StartDate").value;
+        var endDate = document.getElementById("EndDate").value;
+
+        if ((Date.parse(startDate) > Date.parse(endDate))) {
+            input.setCustomValidity('Start date must be before end date')
+        }
+    }
+</script>
 </html>
