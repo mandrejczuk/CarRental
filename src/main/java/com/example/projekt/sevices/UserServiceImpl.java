@@ -18,6 +18,8 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl  implements UserDetailsService  {
 
+
+
     private  UserRepository userRepository;
     private Logger logger = LoggerFactory.getLogger(UserDetails.class);
 
@@ -43,6 +45,7 @@ public class UserServiceImpl  implements UserDetailsService  {
         user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        logger.info("User "+ user.getEmail() +"has registered");
     }
 
     public User loadUserByEmail(String email) throws UsernameNotFoundException{
@@ -54,15 +57,6 @@ public class UserServiceImpl  implements UserDetailsService  {
         return userRepository.findAll();
     }
 
-    public void saveAll(List <User> users)
-    {
-        for (int i = 0; i < users.size(); i++)
-        {
-            users.get(i).setPassword(passwordEncoder.encode(users.get(i).getPassword()));
-        }
-
-        userRepository.saveAll(users);
-    }
     public Optional<User> findbyId(Long id)
     {
         return userRepository.findById(id);
@@ -72,17 +66,21 @@ public class UserServiceImpl  implements UserDetailsService  {
     {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        logger.info("User"+ user.getEmail() +"had been added");
     }
     public void deleteUserbyId(Long id)
     {
         userRepository.delete(userRepository.getOne(id));
+        logger.info("User with id: "+ id +" has been deleted");
     }
 
     public boolean isEmailUnique(String email)
     {
         if(userRepository.existsUserByEmail(email))
         {
+            logger.warn("Someone has tried use email existing in db");
             return false;
+
         }
         else
         {

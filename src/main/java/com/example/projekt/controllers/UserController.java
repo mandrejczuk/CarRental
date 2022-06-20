@@ -88,9 +88,16 @@ public class UserController {
     @PostMapping("admin/dashboard/users/save")
     public String saveUser(@ModelAttribute User user)
     {
-        userService.addUser(user);
+        if(userService.isEmailUnique(user.getEmail()))
+        {
+            userService.addUser(user);
+            return "redirect:/admin/dashboard/users/show/all";
+        }
+        else
+        {
+            return "add-user-admin-panel-fail";
+        }
 
-        return "redirect:/admin/dashboard/users/show/all";
     }
 
     @GetMapping("admin/dashboard/users/edit/{id}")
